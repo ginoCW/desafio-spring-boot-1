@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "ab3fac63-d7c7-46b0-aeb5-853b9057c7cf",
+		"name": "TaskManagerAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8950574"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authToken = pm.response.text();\r",
+									"pm.environment.set(\"token\", authToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/auth/login?username=dummy",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "dummy"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documentation",
+			"item": [
+				{
+					"name": "openapidocs",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v3/api-docs.yaml",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v3",
+								"api-docs.yaml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "swagger-ui",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/swagger-ui/index.html",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"swagger-ui",
+								"index.html"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tareas",
+			"item": [
+				{
+					"name": "EstadoTareas",
+					"item": [
+						{
+							"name": "agregarEstadoTarea",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"estado\": \"LISTO\",\r\n  \"estadoActivo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/tarea/agregarEstadoTarea?idTarea=4",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tarea",
+										"agregarEstadoTarea"
+									],
+									"query": [
+										{
+											"key": "idTarea",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminarEstado",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/tarea/eliminarEstado?idEstado=5",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tarea",
+										"eliminarEstado"
+									],
+									"query": [
+										{
+											"key": "idEstado",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "getAllTareas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tarea/getAllTareas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tarea",
+								"getAllTareas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crearTarea",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Subir proyecto a bitbucket\",\r\n  \"descripcion\": \"Se debe subir el desafio de codigo al git enviado por HF Solutions\",\r\n  \"estadoTarea\": [\r\n    {\r\n      \"estado\": \"PENDIENTE\",\r\n      \"estadoActivo\": true\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tarea/crearTarea?idUsuario=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tarea",
+								"crearTarea"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizarTarea",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tarea/actualizarTarea?idTarea=5&titulo=Subir proyecto al svn&descripcion=subir proyecto al repo tortoise",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tarea",
+								"actualizarTarea"
+							],
+							"query": [
+								{
+									"key": "idTarea",
+									"value": "5"
+								},
+								{
+									"key": "titulo",
+									"value": "Subir proyecto al svn"
+								},
+								{
+									"key": "descripcion",
+									"value": "subir proyecto al repo tortoise"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminarTarea",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tarea/eliminarTarea?idTarea=5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tarea",
+								"eliminarTarea"
+							],
+							"query": [
+								{
+									"key": "idTarea",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "eliminarUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuario/eliminarUsuario?idUsuario=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"eliminarUsuario"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuario/getAllUsuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"getAllUsuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizarUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuario/actualizarUsuario?idUsuario=2&nombre=Pedro",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"actualizarUsuario"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "2"
+								},
+								{
+									"key": "nombre",
+									"value": "Pedro"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crearUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"Juan\",\r\n  \"tarea\": [\r\n    {\r\n      \"titulo\": \"Subir proyecto a git\",\r\n      \"descripcion\": \"Se debe subir el desafio de codigo al git enviado por HF Solutions\",\r\n      \"estadoTarea\": [\r\n        {\r\n          \"estado\": \"PENDIENTE\",\r\n          \"estadoActivo\": true\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuario/crearUsuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"crearUsuario"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
